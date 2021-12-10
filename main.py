@@ -57,7 +57,6 @@ def Get_content(html,URL):
     req = session.get(URL, headers=HEADERS)
     soup=BeautifulSoup(req.content, 'html.parser')
     items= soup.find_all('div',attrs={"data-qa": "vacancy-serp__vacancy vacancy-serp__vacancy_standard_plus"})
-    print(len(items))
     for item in items:
         try:
             title = item.find('a', attrs={'data-qa': 'vacancy-serp__vacancy-title'}).text
@@ -97,8 +96,6 @@ def sorting(wanted_salary):
 @bot.message_handler(content_types=['text'])
 
 def start(message):
-
-    print(1)
     global salary_list
     global All_list
     All_list = []
@@ -110,7 +107,6 @@ def start(message):
         bot.send_message(message.from_user.id, 'Напиши /start')
 
 def get_job(message):
-    print(2)
     global job
     job = message.text
     bot.send_message(message.from_user.id, 'Назовите город')
@@ -161,7 +157,6 @@ def get_wanted_salary(message):
             str1=JobDict[0][0][1]+ '\n'+ str(JobDict[0][0][5])+ '\n' +JobDict[0][0][2]+'\n'+JobDict[0][0][4]
             str2=JobDict[1][0][1]+ '\n'+ str(JobDict[1][0][5])+ '\n' +JobDict[1][0][2]+'\n'+JobDict[1][0][4]
             str3=JobDict[2][0][1]+ '\n'+ str(JobDict[2][0][5])+ '\n' +JobDict[2][0][2]+'\n'+JobDict[2][0][4]
-            print(str1)
             bot.send_message(message.from_user.id,str1)
             bot.send_message(message.from_user.id, str2)
             bot.send_message(message.from_user.id, str3)
