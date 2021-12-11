@@ -2,7 +2,7 @@ import requests
 import telebot
 from bs4 import BeautifulSoup
 
-bot = telebot.TeleBot('')
+bot = telebot.TeleBot('2134887886:AAG4rUCcWkIse-AU-sjIaUCm8WPm0PUDns4')
 All_list=[]
 joker={}
 HEADERS={
@@ -85,13 +85,13 @@ def GetAvSalary(place,job,wanted_salary):
     return batman
 
 def sorting(wanted_salary):
+    joker={}
     for i in range(len(All_list)):
 
         joker[All_list[i]]=abs(All_list[i][0]-wanted_salary)
 
     sorted_tuple = sorted(joker.items(), key=lambda x: x[1])
     return sorted_tuple
-
 
 @bot.message_handler(content_types=['text'])
 
@@ -113,8 +113,6 @@ def get_job(message):
     bot.register_next_step_handler(message, get_place)
 def get_place(message):
     global place
-    global a
-    a=True
     place = message.text
     place=place.lower()
 
@@ -149,10 +147,12 @@ def get_wanted_salary(message):
     try :
         wanted_salary = int(message.text)
         bot.send_message(message.from_user.id, "дайте подумать...")
-        JobDict=GetAvSalary(place,job,wanted_salary)
+
+        JobDict = GetAvSalary(place,job,wanted_salary)
         if len(JobDict)<3:
             bot.send_message(message.from_user.id, "такая профессия в данном городе не ликвидна")
             bot.register_next_step_handler(message, start)
+            JobDict = []
         else:
             str1=JobDict[0][0][1]+ '\n'+ str(JobDict[0][0][5])+ '\n' +JobDict[0][0][2]+'\n'+JobDict[0][0][4]
             str2=JobDict[1][0][1]+ '\n'+ str(JobDict[1][0][5])+ '\n' +JobDict[1][0][2]+'\n'+JobDict[1][0][4]
@@ -161,6 +161,7 @@ def get_wanted_salary(message):
             bot.send_message(message.from_user.id, str2)
             bot.send_message(message.from_user.id, str3)
             bot.register_next_step_handler(message, start)
+            JobDict = []
     except:
         bot.send_message(message.from_user.id, "можете написать пожалуйста зарплату цифрами "+'\n'+ "Если хотите ввести другую зарплату напишите:"+'\n'+'еще раз'+'\n'+"если хотите начать сначала, напишите:"+'\n'+'заного')
         bot.register_next_step_handler(message, proverka_Salary)
