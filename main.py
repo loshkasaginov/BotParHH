@@ -2,7 +2,7 @@ import requests
 import telebot
 from bs4 import BeautifulSoup
 
-bot = telebot.TeleBot('2134887886:AAG4rUCcWkIse-AU-sjIaUCm8WPm0PUDns4')
+bot = telebot.TeleBot('')
 All_list=[]
 joker={}
 HEADERS={
